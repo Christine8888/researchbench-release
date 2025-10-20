@@ -1,0 +1,20 @@
+{
+    "task_id": "mtov_spin",
+    "paper_id": "gw_nsbh",
+    "kind": "numeric",
+    "difficulty": 5,
+    "description": "NS maximum mass, high spin assumption",
+    "instructions": "Report the modal value and the 95% lower limit for the maximum mass of a non-spinning neutron star.\n Measure using all 4 LIGO events described in the paper, the 'ZS' spin prior, and an additional prior enforcing that GW190814 is maximally spinning, amin/aKep = 0.9.\n Return the result as an array in the format [modal_value, lower_limit_95_percent].",
+    "tolerance": [
+        0.1,
+        0.1
+    ],
+    "expected_output": [
+        2.4,
+        2.2
+    ],
+    "parents": [
+        "default_mtov",
+        "load_data"
+    ]
+}

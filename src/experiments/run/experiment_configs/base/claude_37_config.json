@@ -1,0 +1,15 @@
+{
+    "MODEL": "anthropic/claude-3-7-sonnet-20250219",
+    "RUN_NAME": "claude-37-base",
+    "TASK_TYPES": ["numeric"],
+    "FILTERS": {"source": "expert"},
+    "MASKING": true,
+    "MODE": "base",
+    "MESSAGE_LIMIT": 10000,
+    "TOKEN_LIMIT": 5000000,
+    "EXECUTION_TIMEOUT": 14400,
+    "TIME_LIMIT": 21600,
+    "ATTEMPTS": 1,
+    "CACHE": true,
+    "INCLUDE_WORKSPACE": true
+}

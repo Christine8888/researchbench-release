@@ -1,0 +1,13 @@
+{
+    "task_id": "modified_gravity",
+    "paper_id": "gw_cosmo",
+    "kind": "numeric",
+    "difficulty": 3.5,
+    "description": "predict the contraints on c_M at 10000 events",
+    "instructions": "Project the 1-sigma constraint (68.3% credible interval, symmetric about the median) on c_M, the running of the Planck mass, achievable with 10,000 independent gravitational-wave measurements.\nFix all other parameters to their defaults as stated in the paper.\nReport the one-sided constraint as a float, assuming the 1-sigma bound is approximately symmetric.",
+    "tolerance": 0.005,
+    "expected_output": 0.02,
+    "parents": [
+        "h0_scaling"
+    ]
+}

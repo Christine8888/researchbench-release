@@ -1,0 +1,12 @@
+{
+    "task_id": "ppi_mass_loss_integral",
+    "kind": "numeric",
+    "paper_id": "topdown",
+    "difficulty": 4,
+    "description": "Calculate the average pulsational-pair instability mass loss across a distribution of carbon-oxygen core masses at a fixed metallicity.",
+    "instructions": "1. Using the PPI mass loss formula computed previously, calculate the average ΔMPPI across the range 40 ≤ MCO ≤ 50.\n2. The average is defined as the integral of ΔMPPI over MCO from 40 to 50, divided by the interval width (10).\n3. Compute this integral analytically or numerically.\n4. Return the average ΔMPPI in solar masses.",
+    "expected_output": 4.75,
+    "tolerance": 0.6,
+    "parents": ["ppi_mass_loss_calculation"],
+    "output_justification": "This value can be estimated by visually integrating the mass loss curve in Figure 1 for Z = 0.001 from MCO = 40 to MCO = 50. The mass loss ranges from approximately 0.4 M☉ at MCO = 40 to approximately 11.5 M☉ at MCO = 50, with a curve that suggests an average of around 4.75 M☉."
+  }

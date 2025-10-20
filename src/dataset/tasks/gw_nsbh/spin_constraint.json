@@ -1,0 +1,11 @@
+{
+    "task_id": "spin_constraint",
+    "paper_id": "gw_nsbh",
+    "kind": "numeric",
+    "difficulty": 4,
+    "description": "constraints on spin-M_TOV relation",
+    "instructions": "Using the mock data setup described in the paper and default settings otherwise, simulate a measurement of A_1, the linear dependence between spin and maximum mass.\n Using a ground truth value of A_1 = 0.2, measure the 1-sigma (68%, symmetric about the median) credible interval on A_1 given 50 NSBH events and 150 NSBH events, and report the one-sided error on the gap width.\n Return the result as an array in the format [error_on_50_events, error_on_150_events].",
+    "tolerance": [0.01, 0.01],
+    "expected_output": [0.07, 0.04],
+    "parents": ["default_mtov", "load_data", "m_tov_spin", "mtov_spin_2", "mass_gap_constraint"]
+}

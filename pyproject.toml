@@ -1,0 +1,19 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "researchbench"
+version = "0.1.0"
+description = "ResearchBench: AI evaluation benchmark for scientific paper reproduction"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "numpy",
+    "wget",
+    "huggingface-hub",
+    "datasets",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dataset", "src/evaluation"]

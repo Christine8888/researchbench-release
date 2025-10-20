@@ -1,0 +1,21 @@
+{
+    "task_id": "default_mtov",
+    "paper_id": "gw_nsbh",
+    "kind": "numeric",
+    "difficulty": 3,
+    "description": "68% CI on M_TOV, default settings",
+    "instructions": "Report the 1-sigma (68%) credible interval on the maximum mass of a non-spinning neutron star, under the hierarchical inference setup.\n Measure this under default settings, assuming $\\beta = 0$, the 'ZS' spin prior described in the paper, and all 4 LIGO events described in the paper.\n. Return the result in the list format [lower bound, median, upper bound].",
+    "tolerance": [
+        0.05,
+        0.05,
+        0.05
+    ],
+    "expected_output": [
+        2.6,
+        2.8,
+        3.1
+    ],
+    "parents": [
+        "load_data"
+    ]
+}

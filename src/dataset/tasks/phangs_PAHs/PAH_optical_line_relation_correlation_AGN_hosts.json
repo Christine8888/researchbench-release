@@ -1,0 +1,11 @@
+{
+    "task_id": "PAH_optical_line_relation_correlation_AGN_hosts",
+    "paper_id": "phangs_PAHs",
+    "kind": "qualitative",
+    "difficulty": 1,
+    "description": "Examine whether AGN hosts have different PAH band -- optical line ratio relation than non-AGN host galaxies",
+    "instructions": "The output of the task 'best_fitting_slopes' is a dictionary whose keys are the galaxy names, and the values are a list of [beta, beta_err], where beta is the best-fitting slope of the relation y=log(PAH 11.3/ PAH 7.7) versus x=log([SII]/Halpha), and beta_err is the error on the best-fitting slope. The output of the task 'identify_AGN_hosts' gives a list of a subset of the galaxies that have evidence for AGN. Divide the sample into galaxies with and without AGN, and compare their best-fitting slopes. The task is to answer the question - 'do AGN hosts show different slopes than non-AGN hosts?'. The answer should be 'yes' or 'no', along with an explanation of how the answer was derived. Describe the statistical method used to obtain the answer.",
+    "expected_output": "yes",
+    "tolerance": "",
+    "parents": ["best_fitting_slopes", "identify_AGN_hosts"]
+}

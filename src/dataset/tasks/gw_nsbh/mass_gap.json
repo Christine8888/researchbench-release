@@ -1,0 +1,15 @@
+{
+    "task_id": "mass_gap",
+    "paper_id": "gw_nsbh",
+    "kind": "numeric",
+    "difficulty": 3,
+    "description": "credibility of the mass gap, default model",
+    "instructions": "Compute the probability that the mass gap is >0 M_sun.\n Use the default model: all 4 LIGO events, the 'ZS' spin prior, and $\\beta = 0$.\n Return the probability as a number between 0 and 1.",
+    "tolerance": 0.01,
+    "expected_output": 0.97,
+    "parents": [
+      "default_mtov",
+      "default_mbh",
+      "load_data"
+    ]
+  }
