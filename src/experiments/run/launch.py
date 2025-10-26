@@ -1,5 +1,6 @@
 """Launch evaluations on cluster using Slurm."""
-
+import sys
+sys.path.append("/home/users/cye/researchbench/src")
 import argparse
 import json
 import os

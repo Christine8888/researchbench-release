@@ -1,3 +1,4 @@
+*.sh
 *.env
 *.md
 !README.md
