@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="ResearchBench: Evaluating AI Agents on End-To-End Astrophysics Research Paper Replication">
+  <meta name="keywords" content="ResearchBench, AI Agents, Astrophysics, Benchmark">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ResearchBench: Evaluating AI Agents on End-To-End Astrophysics Research Paper Replication</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./template/static/css/bulma.min.css">
+  <link rel="stylesheet" href="./template/static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./template/static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./template/static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./template/static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./template/static/js/fontawesome.all.min.js"></script>
+  <script src="./template/static/js/bulma-carousel.min.js"></script>
+  <script src="./template/static/js/bulma-slider.min.js"></script>
+  <script src="./template/static/js/index.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">ResearchBench: Evaluating AI Agents on End-To-End Astrophysics Research Paper Replication</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              Christine Ye<sup>1</sup>,</span>
+            <span class="author-block">
+              Sihan Yuan<sup>1</sup>,</span>
+            <span class="author-block">
+              Suchetha Cooray<sup>1</sup>,</span>
+            <span class="author-block">
+              Steven Dillmann<sup>1</sup>,</span>
+            <span class="author-block">
+              Ian L. V. Roque<sup>1</sup>,</span>
+            <span class="author-block">
+              Dalya Baron<sup>1</sup>,</span>
+            <span class="author-block">
+              Philipp Frank<sup>1</sup>,</span>
+            <span class="author-block">
+              Sergio Martin-Alvarez<sup>1</sup>,</span>
+            <span class="author-block">
+              Nolan Koblischke<sup>2</sup>,</span>
+            <span class="author-block">
+              Frank J. Qu<sup>1</sup>,</span>
+            <span class="author-block">
+              Diyi Yang<sup>1</sup>,</span>
+            <span class="author-block">
+              Risa Wechsler<sup>1</sup>,</span>
+            <span class="author-block">
+              Ioana Ciucă<sup>1</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Stanford University</span>
+            <span class="author-block"><sup>2</sup>University of Toronto</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Dataset</span>
+                  </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="figure_1.png" alt="ResearchBench Overview" style="width: 100%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+      <h2 class="subtitle has-text-centered" style="margin-top: 20px;">
+        ResearchBench evaluates AI agents on end-to-end research paper replication. For each paper, we supply the manuscript, dataset, and execution metadata, and a complete set of author-written tasks.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Summary</h2>
+        <div class="content has-text-justified">
+          <p>
+            Can AI agents conduct scientific research? Current benchmarks test either domain knowledge or coding skills, but not both. Here, we introduce <strong>ResearchBench</strong>, a benchmark evaluating AI agents on complete replications of peer-reviewed astrophysics papers.
+          </p>
+          <p>
+            Agents must reproduce papers' core contributions—from data analysis to theoretical calculations—and are scored on result accuracy. Even frontier models achieve only ~20% success, revealing significant gaps in agents' ability to conduct autonomous research.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">The ResearchBench Dataset</h2>
+        <div class="content has-text-justified">
+          <p>We curate 22 reproducible astrophysics papers decomposed into 121 expert-written tasks that:</p>
+          <ol>
+            <li>Cover complete research workflows</li>
+            <li>Require both domain expertise and coding ability</li>
+            <li>Enable objective, automated grading</li>
+          </ol>
+          <p>
+            Tasks range from simple data queries (minutes) to complex theoretical implementations (days), enabling partial credit for incomplete replications.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Key Results</h2>
+        <div class="content">
+          <table style="margin: 30px auto; width: 80%;">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Success Rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>o3</td>
+                <td>20.3%</td>
+              </tr>
+              <tr>
+                <td>o4-mini</td>
+                <td>15.2%</td>
+              </tr>
+              <tr>
+                <td>Claude 3.7</td>
+                <td>13.4%</td>
+              </tr>
+              <tr>
+                <td>Gemini 2.5</td>
+                <td>9.8%</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="content has-text-justified">
+            <p>
+              Despite saturating knowledge benchmarks, frontier models struggle with ResearchBench's integrated challenges. Human evaluations reveal agents understand tasks reasonably well but fail at execution—making mathematical errors, mishandling data, and producing incorrect implementations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+        This website is licensed under a <a rel="license"
+                                            href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+        Commons Attribution-ShareAlike 4.0 International License</a>.
+      </p>
+      <p>
+        Website template borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
