@@ -230,7 +230,7 @@ def get_paper_prompt(paper, workspace: Optional[str] = None, include_workspace: 
 
     Args:
         paper: Paper object with tasks and metadata
-        workspace: Base workspace path (paper-specific workspace will be constructed)
+        workspace: Paper-specific workspace directory (e.g., /workspace/paper_id)
         include_workspace: Whether to alert agent that data is pre-downloaded
 
     Returns:
@@ -247,13 +247,8 @@ def get_paper_prompt(paper, workspace: Optional[str] = None, include_workspace: 
     if paper.execution_requirements:
         prompt += get_executor_instructions(paper.execution_requirements)
 
-    if workspace:
-        paper_workspace = f"{workspace}/{paper.paper_id}"
-    else:
-        paper_workspace = None
-
     for dataset in paper.datasets:
-        prompt += get_dataset_instructions(dataset, paper_workspace, include_workspace)
+        prompt += get_dataset_instructions(dataset, workspace, include_workspace)
 
     if paper.other_instructions:
         prompt += f"\n\nADDITIONAL AUTHOR INSTRUCTIONS: {paper.other_instructions}\n"
@@ -267,8 +262,8 @@ def get_paper_prompt(paper, workspace: Optional[str] = None, include_workspace: 
 
     prompt += END_PROMPT
 
-    if paper_workspace and include_workspace:
-        prompt += f"\n\nThe folder {paper_workspace} may contain some of the data you need. Be sure to check this directory before downloading any files. You may not write or modify files in the workspace folder, but you may write them in your local directory. You should first list the files in the directory before trying to open any files.\n"
+    if workspace and include_workspace:
+        prompt += f"\n\nThe folder {workspace} may contain some of the data you need. Be sure to check this directory before downloading any files. You may not write or modify files in the workspace folder, but you may write them in your local directory. You should first list the files in the directory before trying to open any files.\n"
 
     blank_output = paper.get_blank_output(fill=0)
     prompt += f"\n\nExpected output format for the 'numeric' tasks as a JSON dictionary. The key for each field corresponds to the TASK_ID:\n{blank_output}\n"

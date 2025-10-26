@@ -20,7 +20,7 @@ class ClusterConfig:
     gpu_partition: str = "owners"
     time_hours: int = 7
     cpus_per_task: int = 4
-    mem_gb: int = 128
+    mem_gb: int = 256
 
 
 DEFAULT_CONFIG = ClusterConfig()

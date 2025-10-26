@@ -1,6 +1,6 @@
 {
-    "MODEL": "anthropic/claude-sonnet-4-5-20250929",
-    "RUN_NAME": "claude-4-unmask",
+    "MODEL": "openai/o4-mini",
+    "RUN_NAME": "o4-mini-unmask",
     "TASK_TYPES": ["numeric"],
     "FILTERS": {"source": "expert"},
     "MASKING": false,

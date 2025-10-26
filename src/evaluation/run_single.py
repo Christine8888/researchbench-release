@@ -39,7 +39,7 @@ def run_single_evaluation(
         paper_id: Paper ID to evaluate
         model: Model name for Inspect AI
         log_dir: Directory for evaluation logs
-        workspace_base: Base workspace directory
+        workspace_base: Base workspace directory (paper-specific path will be constructed as workspace_base/paper_id)
         papers_dir: Papers directory (optional, uses default if None)
         tasks_dir: Tasks directory (optional, uses default if None)
         manuscripts_dir: Manuscripts directory (optional, uses default if None)
@@ -77,7 +77,7 @@ def run_single_evaluation(
 
     task = paper_task(
         paper_obj=paper_obj,
-        workspace=workspace_base,
+        workspace=paper_workspace,
         attempts=attempts,
         message_limit=message_limit,
         token_limit=token_limit,

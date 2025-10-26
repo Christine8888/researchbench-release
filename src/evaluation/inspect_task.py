@@ -31,7 +31,7 @@ def paper(
 
     Args:
         paper_obj: Paper object with tasks and metadata
-        workspace: Base workspace directory path
+        workspace: Paper-specific workspace directory path (e.g., /workspace/paper_id)
         attempts: Number of attempts to solve the task
         message_limit: Maximum messages in conversation
         token_limit: Maximum tokens in conversation
