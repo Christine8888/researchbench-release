@@ -15,6 +15,29 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+def has_existing_eval(paper_id: str, log_dir: str) -> Path | None:
+    """Check if paper already has an eval file in the log directory.
+
+    Args:
+        paper_id: Paper ID to check
+        log_dir: Directory to search for eval files
+
+    Returns:
+        Path to existing eval file if found, None otherwise
+    """
+    log_path = Path(log_dir)
+    if not log_path.exists():
+        return None
+
+    # Search for eval files containing the paper_id
+    # Paper IDs use underscores in filenames, e.g., trgb-std-candle
+    for eval_file in log_path.glob('*.eval'):
+        if f"_{paper_id}_" in eval_file.name:
+            return eval_file
+
+    return None
+
+
 def run_paper_job(
     paper_id: str,
     config_path: str,
@@ -138,6 +161,23 @@ def main():
     total_tasks = sum(len(loader.papers[pid].tasks) for pid in paper_ids)
     logger.info(f"Found {len(paper_ids)} papers to process")
     logger.info(f"Total tasks to evaluate: {total_tasks}")
+
+    # Check for existing eval files and filter out papers that already have results
+    papers_to_run = []
+    for paper_id in paper_ids:
+        existing_eval = has_existing_eval(paper_id, inspect_log_dir)
+        if existing_eval:
+            logger.warning(f"Skipping {paper_id}: eval file already exists at {existing_eval}")
+        else:
+            papers_to_run.append(paper_id)
+
+    if len(papers_to_run) < len(paper_ids):
+        logger.info(f"Filtered: {len(papers_to_run)}/{len(paper_ids)} papers will be run")
+        paper_ids = papers_to_run
+
+    if not paper_ids:
+        logger.info("No papers to run - all have existing eval files")
+        return
 
     cpu_executor = get_slurm_executor(
         log_dir=slurm_log_dir,

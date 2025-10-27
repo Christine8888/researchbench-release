@@ -1,6 +1,6 @@
 {
     "MODEL": "anthropic/claude-sonnet-4-20250514",
-    "RUN_NAME": "claude-4-base",
+    "RUN_NAME": "claude-4-unmask",
     "TASK_TYPES": ["numeric"],
     "FILTERS": {"source": "expert"},
     "MASKING": true,
