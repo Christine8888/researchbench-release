@@ -40,7 +40,7 @@ Examples:
         "--input-dir",
         type=str,
         required=True,
-        help="Directory containing .eval log files"
+        help="Directory containing .eval log files, or path to JSONL file for classification"
     )
 
     parser.add_argument(

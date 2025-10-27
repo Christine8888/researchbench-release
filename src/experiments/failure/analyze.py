@@ -206,6 +206,49 @@ async def analyze_transcript(
         )
 
 
+async def analyze_from_jsonl(
+    model: Model,
+    input_file: str,
+    prompt_template: str,
+    expected_tags: List[str],
+    config: GenerateConfig
+) -> List[AnalysisResult]:
+    """Analyze items from a JSONL file (e.g., for classification)."""
+    with open(input_file, 'r') as f:
+        items = [json.loads(line) for line in f if line.strip()]
+
+    logger.info(f"Found {len(items)} items to analyze from {input_file}")
+
+    analyses = []
+    for item in items:
+        paper_id = item.get("paper_id", "unknown")
+        eval_id = item.get("eval_id", "unknown")
+        parsed_data_input = item.get("parsed_data", {})
+        metadata = item.get("metadata", {})
+
+        prompt_vars = {
+            "paper_id": paper_id,
+            **parsed_data_input
+        }
+        prompt = format_prompt(prompt_template, **prompt_vars)
+
+        completion, parsed = await analyze_with_prompt(
+            model, prompt, expected_tags, config
+        )
+
+        analyses.append(AnalysisResult(
+            eval_id=eval_id,
+            paper_id=paper_id,
+            response=completion,
+            parsed_data=parsed,
+            metadata=metadata,
+            was_segmented=False,
+            num_segments=1
+        ))
+
+    return analyses
+
+
 async def analyze_directory(
     log_dir: str,
     output_file: str,
@@ -217,7 +260,7 @@ async def analyze_directory(
     max_concurrent: int = 10,
     max_tokens_per_segment: int = 400000
 ) -> List[AnalysisResult]:
-    """Analyze all eval logs in a directory using the provided prompt."""
+    """Analyze all eval logs in a directory or JSONL file using the provided prompt."""
     model = get_model(
         model_name,
         config=GenerateConfig(
@@ -226,39 +269,47 @@ async def analyze_directory(
         )
     )
 
-    eval_files = glob.glob(os.path.join(log_dir, "*.eval"))
+    if os.path.isfile(log_dir) and log_dir.endswith('.jsonl'):
+        logger.info(f"Input is JSONL file, analyzing items directly")
+        analyses = await analyze_from_jsonl(
+            model, log_dir, prompt_template, expected_tags,
+            GenerateConfig(temperature=temperature, max_tokens=max_tokens)
+        )
+        valid_analyses = analyses
+    else:
+        eval_files = glob.glob(os.path.join(log_dir, "*.eval"))
 
-    if not eval_files:
-        logger.warning(f"No .eval files found in {log_dir}")
-        return []
+        if not eval_files:
+            logger.warning(f"No .eval files found in {log_dir}")
+            return []
 
-    logger.info(f"Found {len(eval_files)} eval files to analyze")
+        logger.info(f"Found {len(eval_files)} eval files to analyze")
 
-    valid_analyses = []
-    for i in range(0, len(eval_files), max_concurrent):
-        batch = eval_files[i:i+max_concurrent]
-        tasks = []
+        valid_analyses = []
+        for i in range(0, len(eval_files), max_concurrent):
+            batch = eval_files[i:i+max_concurrent]
+            tasks = []
 
-        for log_file in batch:
-            eval_log = read_eval_log_safe(log_file)
-            if eval_log:
-                tasks.append(
-                    analyze_transcript(
-                        model,
-                        eval_log,
-                        log_file,
-                        prompt_template,
-                        expected_tags,
-                        GenerateConfig(temperature=temperature, max_tokens=max_tokens),
-                        max_tokens_per_segment
+            for log_file in batch:
+                eval_log = read_eval_log_safe(log_file)
+                if eval_log:
+                    tasks.append(
+                        analyze_transcript(
+                            model,
+                            eval_log,
+                            log_file,
+                            prompt_template,
+                            expected_tags,
+                            GenerateConfig(temperature=temperature, max_tokens=max_tokens),
+                            max_tokens_per_segment
+                        )
                     )
-                )
 
-        results = await asyncio.gather(*tasks)
-        valid_analyses.extend([r for r in results if r])
-        logger.info(f"Processed {min(i+max_concurrent, len(eval_files))}/{len(eval_files)} files")
+            results = await asyncio.gather(*tasks)
+            valid_analyses.extend([r for r in results if r])
+            logger.info(f"Processed {min(i+max_concurrent, len(eval_files))}/{len(eval_files)} files")
 
-    logger.info(f"Successfully analyzed {len(valid_analyses)} out of {len(eval_files)} files")
+    logger.info(f"Successfully analyzed {len(valid_analyses)} items")
 
     Path(output_file).parent.mkdir(parents=True, exist_ok=True)
     with open(output_file, 'w') as f:

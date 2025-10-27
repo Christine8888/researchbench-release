@@ -119,11 +119,12 @@ def main():
     parser.add_argument("--task_types", nargs="+", help="Task types to evaluate")
     parser.add_argument("--no_masking", action="store_true", help="Disable text masking")
 
-    parser.add_argument("--message_limit", type=int, default=500)
-    parser.add_argument("--token_limit", type=int, default=200000)
-    parser.add_argument("--execution_timeout", type=int, default=6000)
-    parser.add_argument("--time_limit", type=int, default=12000)
-    parser.add_argument("--attempts", type=int, default=1)
+    # These have None defaults so config can override them
+    parser.add_argument("--message_limit", type=int, default=None)
+    parser.add_argument("--token_limit", type=int, default=None)
+    parser.add_argument("--execution_timeout", type=int, default=None)
+    parser.add_argument("--time_limit", type=int, default=None)
+    parser.add_argument("--attempts", type=int, default=None)
 
     parser.add_argument("--no_cache", action="store_true", help="Disable prompt caching")
     parser.add_argument("--mode", choices=["base", "react"], default="base")
@@ -144,6 +145,18 @@ def main():
             # Override arg if it wasn't explicitly set on command line or doesn't exist
             if not hasattr(args, key_lower) or getattr(args, key_lower) is None:
                 setattr(args, key_lower, value)
+
+    # Apply fallback defaults if still None after config loading
+    if args.message_limit is None:
+        args.message_limit = 500
+    if args.token_limit is None:
+        args.token_limit = 200000
+    if args.execution_timeout is None:
+        args.execution_timeout = 6000
+    if args.time_limit is None:
+        args.time_limit = 12000
+    if args.attempts is None:
+        args.attempts = 1
 
     # Verify required args after config loading
     if not args.model:
