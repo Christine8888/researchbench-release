@@ -1,4 +1,6 @@
 *.sh
+*.DS_Store
 *.env
+logs/
 *.md
 !README.md

@@ -165,12 +165,8 @@ def get_dataset_instructions(dataset, workspace: Optional[str] = None, include_w
     prompt += "----------------------------------\n\n"
     prompt += f"KIND: {dataset.kind}\n"
 
-    if dataset.access_instructions:
-        prompt += f"ACCESS: {dataset.access_instructions}\n"
-    if dataset.usage_instructions:
-        prompt += f"USAGE: {dataset.usage_instructions}\n"
-    if dataset.read_instructions:
-        prompt += f"READING: {dataset.read_instructions}\n"
+    for key, value in dataset.data_instructions.items():
+        prompt += f"{key}: {value}\n"
 
     if isinstance(dataset, APIDataset):
         if dataset.api_url:
