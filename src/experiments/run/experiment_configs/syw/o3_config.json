@@ -1,6 +1,6 @@
 {
     "MODEL": "openai/o3-mini",
-    "RUN_NAME": "o3-mini-syw",
+    "RUN_NAME": "o3-syw",
     "TASK_TYPES": ["numeric"],
     "FILTERS": {"source": "showyourwork"},
     "MASKING": true,
