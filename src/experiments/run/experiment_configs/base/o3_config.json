@@ -1,6 +1,6 @@
 {
-    "MODEL": "openai/o3-mini",
-    "RUN_NAME": "o3-mini-base",
+    "MODEL": "openai/o3",
+    "RUN_NAME": "o3-base",
     "TASK_TYPES": ["numeric"],
     "FILTERS": {"source": "expert"},
     "MASKING": true,
