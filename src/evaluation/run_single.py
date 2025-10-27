@@ -127,9 +127,9 @@ def main():
     parser.add_argument("--attempts", type=int, default=None)
 
     parser.add_argument("--no_cache", action="store_true", help="Disable prompt caching")
-    parser.add_argument("--mode", choices=["base", "react"], default="base")
+    parser.add_argument("--mode", choices=["base", "react"], default=None)
     parser.add_argument("--no_workspace", action="store_true", help="Don't alert agent about workspace")
-    parser.add_argument("--display", default="full")
+    parser.add_argument("--display", default=None)
 
     parser.add_argument("--config", help="JSON config file (overrides other args)")
 
@@ -157,6 +157,23 @@ def main():
         args.time_limit = 12000
     if args.attempts is None:
         args.attempts = 1
+    if args.mode is None:
+        args.mode = "base"
+    if args.display is None:
+        args.display = "full"
+
+    # Handle boolean config values that use inverted CLI flags
+    # Config uses positive values (CACHE, MASKING, INCLUDE_WORKSPACE)
+    # CLI uses negative flags (--no_cache, --no_masking, --no_workspace)
+    if hasattr(args, 'cache') and not args.no_cache:
+        # If config set CACHE and --no_cache wasn't explicitly passed
+        args.no_cache = not args.cache
+    if hasattr(args, 'masking') and not args.no_masking:
+        # If config set MASKING and --no_masking wasn't explicitly passed
+        args.no_masking = not args.masking
+    if hasattr(args, 'include_workspace') and not args.no_workspace:
+        # If config set INCLUDE_WORKSPACE and --no_workspace wasn't explicitly passed
+        args.no_workspace = not args.include_workspace
 
     # Verify required args after config loading
     if not args.model:
