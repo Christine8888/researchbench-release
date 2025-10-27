@@ -110,8 +110,20 @@ def main():
         exp_config["RUN_NAME"] = args.run_name
 
     cluster_config = DEFAULT_CONFIG
+
+    # Ensure base log directories exist
+    Path(cluster_config.slurm_log_dir).mkdir(parents=True, exist_ok=True)
+    Path(cluster_config.inspect_log_dir).mkdir(parents=True, exist_ok=True)
+    Path(cluster_config.tmp_base).mkdir(parents=True, exist_ok=True)
+
+    # Create run-specific directories
     slurm_log_dir = os.path.join(cluster_config.slurm_log_dir, exp_config["RUN_NAME"])
+    inspect_log_dir = os.path.join(cluster_config.inspect_log_dir, exp_config["RUN_NAME"], "logs")
     Path(slurm_log_dir).mkdir(parents=True, exist_ok=True)
+    Path(inspect_log_dir).mkdir(parents=True, exist_ok=True)
+
+    logger.info(f"Slurm logs: {slurm_log_dir}")
+    logger.info(f"Inspect logs: {inspect_log_dir}")
 
     paper_list = [args.paper_id] if args.paper_id else []
 

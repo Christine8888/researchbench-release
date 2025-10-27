@@ -1,5 +1,5 @@
 {
-    "MODEL": "openai/o3-mini",
+    "MODEL": "openai/o3",
     "RUN_NAME": "o3-syw",
     "TASK_TYPES": ["numeric"],
     "FILTERS": {"source": "showyourwork"},

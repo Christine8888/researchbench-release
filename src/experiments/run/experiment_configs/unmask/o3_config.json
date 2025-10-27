@@ -1,6 +1,6 @@
 {
-    "MODEL": "openai/o3-mini",
-    "RUN_NAME": "o3-mini-unmask",
+    "MODEL": "openai/o3",
+    "RUN_NAME": "o3-unmask",
     "TASK_TYPES": ["numeric"],
     "FILTERS": {"source": "expert"},
     "MASKING": false,

@@ -1,5 +1,5 @@
 {
-    "MODEL": "google/gemini-2-5-pro",
+    "MODEL": "google/gemini-2.5-pro",
     "RUN_NAME": "gemini-25-unmask",
     "TASK_TYPES": ["numeric"],
     "FILTERS": {"source": "expert"},
