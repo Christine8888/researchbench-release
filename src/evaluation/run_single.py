@@ -108,7 +108,7 @@ def main():
     parser = argparse.ArgumentParser(description="Run single paper evaluation")
 
     parser.add_argument("--paper_id", "-p", required=True, help="Paper ID to evaluate")
-    parser.add_argument("--model", "-m", required=True, help="Model name")
+    parser.add_argument("--model", "-m", help="Model name (required if not in config)")
     parser.add_argument("--log_dir", "-l", required=True, help="Log directory")
 
     parser.add_argument("--workspace_base", help="Base workspace directory")
@@ -140,8 +140,14 @@ def main():
             config = json.load(f)
 
         for key, value in config.items():
-            if not hasattr(args, key.lower()):
-                setattr(args, key.lower(), value)
+            key_lower = key.lower()
+            # Override arg if it wasn't explicitly set on command line or doesn't exist
+            if not hasattr(args, key_lower) or getattr(args, key_lower) is None:
+                setattr(args, key_lower, value)
+
+    # Verify required args after config loading
+    if not args.model:
+        parser.error("--model is required (either via CLI or config file)")
 
     run_single_evaluation(
         paper_id=args.paper_id,

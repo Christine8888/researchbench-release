@@ -46,6 +46,8 @@ def run_paper_job(
         "--bind", f"{cluster_config.home_dir}:{cluster_config.home_dir}:ro",
         "--bind", f"{cluster_config.home_dir}/.config:{cluster_config.home_dir}/.config:rw",
         "--bind", f"{cluster_config.home_dir}/.cache:{cluster_config.home_dir}/.cache:rw",
+        "--bind", f"{cluster_config.home_dir}/.pyenv:{cluster_config.home_dir}/.pyenv:rw",
+        "--bind", f"{cluster_config.home_dir}/.local/share/inspect_ai:{cluster_config.home_dir}/.local/share/inspect_ai:rw",
         "--bind", f"{cluster_config.inspect_log_dir}:{cluster_config.inspect_log_dir}:rw",
         "--bind", f"{job_tmp_dir}:/tmp:rw"
     ]
@@ -58,9 +60,12 @@ def run_paper_job(
 
     run_name = exp_config.get("RUN_NAME", "evaluation")
 
+    # Get src directory (go up from run/ to experiments/ to src/)
+    src_dir = Path(__file__).parent.parent.parent.absolute()
+
     bash_cmd = (
         f"export PYTHONUSERBASE=/usr/local && "
-        f"export PYTHONPATH={cluster_config.home_dir}/.local/lib/python3.12/site-packages:$PYTHONPATH && "
+        f"export PYTHONPATH={src_dir}:{cluster_config.home_dir}/.local/lib/python3.12/site-packages:$PYTHONPATH && "
         f"export PATH=/usr/local/bin:$PATH && "
         f"export HOME=/tmp && "
         f"export GALPYRC=/tmp/.galpyrc && "
@@ -117,7 +122,9 @@ def main():
     )
 
     paper_ids = list(loader.papers.keys())
+    total_tasks = sum(len(loader.papers[pid].tasks) for pid in paper_ids)
     logger.info(f"Found {len(paper_ids)} papers to process")
+    logger.info(f"Total tasks to evaluate: {total_tasks}")
 
     cpu_executor = get_slurm_executor(
         log_dir=slurm_log_dir,
@@ -159,7 +166,8 @@ def main():
             )
             logger.info(f"Submitted job for {paper_id}")
 
-    logger.info(f"All {len(paper_ids)} jobs submitted")
+    logger.info(f"All {len(paper_ids)} jobs submitted to Slurm")
+    logger.info(f"Maximum {cluster_config.n_parallel} jobs will run concurrently in each partition (CPU or GPU)")
 
 
 if __name__ == "__main__":
