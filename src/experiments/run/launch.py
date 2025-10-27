@@ -112,7 +112,8 @@ def main():
     loader = Dataloader(
         task_types=exp_config.get("TASK_TYPES"),
         masked=exp_config.get("MASKING", True),
-        paper_ids=paper_list
+        paper_ids=paper_list,
+        filters=exp_config.get("FILTERS")
     )
 
     paper_ids = list(loader.papers.keys())
