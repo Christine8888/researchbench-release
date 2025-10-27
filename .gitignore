@@ -1,7 +1,7 @@
 *.sh
 *.DS_Store
 *.env
-logs/
+# logs/
 *.md
 !README.md
 __pycache__/
