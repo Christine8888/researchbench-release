@@ -29,10 +29,16 @@ def has_existing_eval(paper_id: str, log_dir: str) -> Path | None:
     if not log_path.exists():
         return None
 
-    # Search for eval files containing the paper_id
-    # Paper IDs use underscores in filenames, e.g., trgb-std-candle
+    # Normalize paper_id: check both with hyphens and underscores
+    # Paper IDs may use either "_" or "-" as separators
+    paper_id_normalized = paper_id.replace("_", "-")
+    paper_id_alt = paper_id.replace("-", "_")
+
     for eval_file in log_path.glob('*.eval'):
-        if f"_{paper_id}_" in eval_file.name:
+        # Check for paper_id with both normalizations
+        if (f"_{paper_id}_" in eval_file.name or
+            f"_{paper_id_normalized}_" in eval_file.name or
+            f"_{paper_id_alt}_" in eval_file.name):
             return eval_file
 
     return None
