@@ -38,7 +38,7 @@ def get_slurm_executor(
     executor = submitit.AutoExecutor(folder=log_dir)
 
     slurm_kwargs = {
-        "slurm_time": f"{time_hours}:00:00",
+        "timeout_min": time_hours * 60,
         "nodes": nodes,
         "slurm_ntasks_per_node": 1,
         "cpus_per_task": cpus_per_task,
