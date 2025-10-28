@@ -24,7 +24,7 @@
         "needs_gpu": false,
         "needs_browsing": true,
         "code_language": "python",
-        "dependencies": null
+        "dependencies": []
     },
     "source": "expert",
     "other_instructions": null
